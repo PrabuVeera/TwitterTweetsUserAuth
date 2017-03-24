@@ -1,0 +1,56 @@
+﻿@model TwitterTweetsUserAuth.Models.SearchEntity
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<script language="javascript">
+    $('#UserName').change(function () {
+        var recordId = this.value;
+        $.getJSON("/Home/SearchForUsersLike",
+            {
+                userName: recordId
+            },
+            function (data) {
+                alert(data);
+            });
+    });
+</script>
+
+<div id="mainContent">
+    <div id="contTitle">
+        Searching For Tweets
+        
+        
+    </div>
+    <div>
+        @using (Html.BeginForm("SearchTweetsForUser", "Home", FormMethod.Post))
+        {
+            <fieldset>
+                <ul>
+                    <li>
+                        @Html.LabelFor(m => m.UserName, "Please enter the user name to search")
+                        @Html.TextBoxFor(m => m.UserName)
+                        @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                        <span id="tweetIcon">
+                            <img src="~/Content/Images/images.png" type="image" id="searchIcon">
+                        </span>
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.NumberOfTweets, "Number of tweets to be displayed")
+                        @Html.DropDownListFor(m => m.NumberOfTweets, TwitterTweetsUserAuth.Models.SearchEntity.GetListItems())
+                    </li>
+                </ul>
+
+                <input type="submit" value="Submit" name="About" />
+
+                <div class="" style="width:100%;text-align:center;padding:2%;margin-left:25%;">
+                    @Html.ValidationMessageFor(model => model.UserName)
+                    <div style="width:50%;">
+                    </div>
+                </div>
+
+            </fieldset>
+        }
+    </div>
+</div>
+

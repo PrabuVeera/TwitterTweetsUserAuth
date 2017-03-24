@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Output";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Search Result</h2>
+@{
+    var tweets = (TwitterTweetsUserAuth.Models.Tweet[])ViewData[TwitterTweetsUserAuth.Models.TwitterSearchResult.PARAM_NAME];
+    if (tweets == null || tweets.Count() == 0)
+    {
+        <p>No tweets found for the user.</p>
+    }
+    else
+    {
+        <p>Tweets of the user</p>
+        <table>
+            <tr>
+                <th>Created Date</th>
+                <th>Created time</th>
+                <th>Tweet</th>
+            </tr>
+            @foreach (var tw in tweets)
+            {
+                <tr>
+                    <td>@tw.DateTimeCreatedOn.ToString("yyyy-MM-dd", System.Globalization.CultureInfo.DefaultThreadCurrentCulture)</td>
+                    <td>@tw.DateTimeCreatedOn.ToString("hh:mm", System.Globalization.CultureInfo.DefaultThreadCurrentCulture)</td>
+                    <td>@tw.Text</td>
+                </tr>
+            }
+        </table>
+    }
+}
