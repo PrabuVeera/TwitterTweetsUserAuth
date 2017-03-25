@@ -25,19 +25,29 @@ namespace TwitterTweetsUserAuth.Controllers
         /// <summary>
         /// Controller method to serach with username like ''
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="Prefix"></param>
         /// <returns></returns>
-        public JsonResult SearchForUsersLike(string userName)
+        [HttpPost]
+        public JsonResult SearchForUsersLike(string Prefix)
         {
-            var stringResult = new string[] {};
-            if (!string.IsNullOrEmpty(userName))
+            var stringResult = new object { };
+            if (!string.IsNullOrEmpty(Prefix))
             {
-                var service = OuthAuthenticationHelper.GetAuthenticatedTwitterService(System.Web.HttpContext.Current);
+                try
+                {
+                    var service = OuthAuthenticationHelper.GetAuthenticatedTwitterService(System.Web.HttpContext.Current);
 
-                stringResult = service.SearchForUser(new SearchForUserOptions() { Q = userName, Count = 3, Page = 1 })
-                    .Select(x => x.ScreenName).ToArray();
+                    stringResult = service.SearchForUser(
+                        new SearchForUserOptions() { Q = Prefix, Count = 10, Page = 1 })
+                         .Select(x => new { x.ScreenName, profurl = x.ProfileImageUrl }).ToArray();
+                    //stringResult =   new {label ="1" , value ="2"};
+                }
+                catch (Exception)
+                {
+
+                }
             }
-            return Json(stringResult, JsonRequestBehavior.AllowGet);
+           return Json(stringResult);
         }
 
         public ActionResult SearchTweetsForUser(SearchEntity user)

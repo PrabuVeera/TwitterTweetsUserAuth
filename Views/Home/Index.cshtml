@@ -3,20 +3,8 @@
     ViewBag.Title = "Home Page";
 }
 
-<script language="javascript">
-    $('#UserName').change(function () {
-        var recordId = this.value;
-        $.getJSON("/Home/SearchForUsersLike",
-            {
-                userName: recordId
-            },
-            function (data) {
-                alert(data);
-            });
-    });
-</script>
-
 <div id="mainContent">
+
     <div id="contTitle">
         Searching For Tweets
         
@@ -25,6 +13,7 @@
     <div>
         @using (Html.BeginForm("SearchTweetsForUser", "Home", FormMethod.Post))
         {
+            @Html.AntiForgeryToken()
             <fieldset>
                 <ul>
                     <li>
