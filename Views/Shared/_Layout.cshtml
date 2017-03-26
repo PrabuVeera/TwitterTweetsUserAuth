@@ -79,8 +79,8 @@
                     dataType: "json",
                     data: { Prefix: request.term },
                     success: function (data) {
-                        //alert(data);
                         response($.map(data, function (item) {
+                            //alert(item.ScreenName);
                             return { label: item.ScreenName, value: item.ScreenName, profurl: item.profurl };
                         }))
                     }

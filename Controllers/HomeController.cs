@@ -40,11 +40,10 @@ namespace TwitterTweetsUserAuth.Controllers
                     stringResult = service.SearchForUser(
                         new SearchForUserOptions() { Q = Prefix, Count = 10, Page = 1 })
                          .Select(x => new { x.ScreenName, profurl = x.ProfileImageUrl }).ToArray();
-                    //stringResult =   new {label ="1" , value ="2"};
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-
+                    //throw new Exception("Error-" + ex);
                 }
             }
            return Json(stringResult);
