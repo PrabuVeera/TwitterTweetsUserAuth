@@ -6,12 +6,15 @@
 <div id="mainContent">
 
     <div id="contTitle">
-        Searching For Tweets
-        
+        Searching For Tweets      
         
     </div>
     <div>
-        @using (Html.BeginForm("SearchTweetsForUser", "Home", FormMethod.Post))
+        @using (Ajax.BeginForm("SearchTweetsForUser", "Home", new AjaxOptions()
+        {
+            HttpMethod = "GET",
+        UpdateTargetId = "divTweets",
+        InsertionMode = InsertionMode.Replace}))
         {
             @Html.AntiForgeryToken()
             <fieldset>
@@ -40,6 +43,8 @@
 
             </fieldset>
         }
-    </div>
+    </div> 
+    <blockquote>
+        <div id="divTweets" class="twitter-tweet"></div>
+    </blockquote>
 </div>
-
